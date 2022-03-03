@@ -9,7 +9,7 @@ public:
     Node *next;
 
 public:
-Node();
+    Node();
     Node(int data)
     {
         this->previous = NULL;
@@ -22,7 +22,12 @@ struct DoublyLinkedList
 {
 public:
     Node *head;
-    DoublyLinkedList();
+
+public:
+    DoublyLinkedList()
+    {
+        head = NULL;
+    }
     Node *addBefore(int data)
     {
         Node *newNode = new Node(data);
@@ -54,7 +59,7 @@ public:
 
 int main()
 {
-    DoublyLinkedList lkd = new DoublyLinkedList();
+    DoublyLinkedList lkd;
     lkd.addBefore(1);
     lkd.addBefore(3);
     lkd.addBefore(2);
