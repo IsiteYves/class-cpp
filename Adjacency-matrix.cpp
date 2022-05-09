@@ -30,7 +30,7 @@ public:
     }
     void add_edge(int origin, int destination)
     {
-        if (origin < 0 || destination < 0 || origin > nodes || destination > nodes)
+        if (origin < 0 || destination < 0 || origin >= nodes || destination >= nodes)
         {
             cout << "Invalid node" << endl;
             return;
@@ -39,7 +39,7 @@ public:
     }
     void remove_edge(int origin, int destination)
     {
-        if (origin < 0 || destination < 0 || origin > nodes || destination > nodes)
+        if (origin < 0 || destination < 0 || origin >= nodes || destination >= nodes)
         {
             cout << "Invalid node" << endl;
             return;
