@@ -1,62 +1,67 @@
 #include <iostream>
 using namespace std;
 
-class AdjacencyMatrix
+class Graph
 {
 private:
     int nodes;
-    int **matrix;
+    int **adjMatrix;
 
 public:
-    AdjacencyMatrix(int nodes)
+    Graph(int node)
     {
-        this->nodes = nodes;
-        matrix = new int *[nodes];
-        for (int i = 0; i < nodes; i++)
+        this->nodes = node;
+        this->adjMatrix = new int *[node];
+        int i, j;
+        for (i = 0; i < node; i++)
         {
-            matrix[i] = new int[nodes];
-            for (int j = 0; j < nodes; j++)
-                matrix[i][j] = 0;
+            adjMatrix[i] = new int[node];
+            for (j = 0; j < node; j++)
+                adjMatrix[i][j] = 0;
         }
+    }
+    void add_edge(int origin, int dest)
+    {
+        if (origin < 0 || dest < 0 || origin >= nodes || dest >= nodes)
+        {
+            cout << "Invalid operation";
+            return;
+        }
+        this->adjMatrix[origin][dest] = 1;
+        this->adjMatrix[dest][origin] = 1;
+    }
+    void remove_edge(int origin, int dest)
+    {
+        if (origin < 0 || dest < 0 || origin >= nodes || dest >= nodes)
+        {
+            cout << "Invalid operation";
+            return;
+        }
+        this->adjMatrix[origin][dest] = 0;
+        this->adjMatrix[dest][origin] = 0;
     }
     void display()
     {
-        for (int i = 0; i < nodes; i++)
+        int i, j;
+        for (i = 0; i < nodes; i++)
         {
-            for (int j = 0; j < nodes; j++)
-                cout << matrix[i][j] << " ";
-            cout << endl;
+            for (j = 0; j < nodes; j++)
+                cout << adjMatrix[i][j] << " ";
+            cout << "\n";
         }
-    }
-    void add_edge(int origin, int destination)
-    {
-        if (origin < 0 || destination < 0 || origin >= nodes || destination >= nodes)
-        {
-            cout << "Invalid node" << endl;
-            return;
-        }
-        matrix[origin][destination] = 1;
-        matrix[destination][origin] = 1;
-    }
-    void remove_edge(int origin, int destination)
-    {
-        if (origin < 0 || destination < 0 || origin >= nodes || destination >= nodes)
-        {
-            cout << "Invalid node" << endl;
-            return;
-        }
-        matrix[origin][destination] = 0;
-        matrix[destination][origin] = 0;
     }
 };
 
 int main()
 {
-    AdjacencyMatrix adj(5);
-    adj.display();
-    adj.add_edge(2, 3);
-    adj.add_edge(3, 3);
-    adj.remove_edge(2, 3);
+    Graph g(7);
+    g.add_edge(1, 4);
+    g.add_edge(0, 1);
+    g.add_edge(6, 3);
+    g.add_edge(9, 2);
+    g.remove_edge(0, 1);
+    g.remove_edge(3, 10);
+    g.add_edge(6, 0);
     cout << "\n";
-    adj.display();
+    g.display();
 }
