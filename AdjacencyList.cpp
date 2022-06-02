@@ -1,50 +1,52 @@
 #include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
+
 class AdjacencyList
 {
 private:
     int nodes;
-    vector<int> *list;
+    vector<int> *adjList;
 
 public:
     AdjacencyList(int nodes)
     {
         this->nodes = nodes;
-        this->list = new vector<int>[nodes];
+        adjList = new vector<int>[nodes];
     }
+
     void display()
     {
         for (int i = 0; i < nodes; i++)
         {
-            cout << "Node: " << i;
-            for (auto v : list[i])
+            cout << "Node " << i << ": ";
+            for (auto dest : adjList[i])
             {
-                cout << "->" << v;
+                cout << " -> " << dest;
             }
             cout << endl;
         }
     }
     void add_edge(int origin, int destination)
     {
-        list[origin].push_back(destination);
-        list[destination].push_back(origin);
+        adjList[origin].push_back(destination);
+        adjList[destination].push_back(origin);
     }
-    void delete_adge(int origin, int destination)
+    void del_edge(int origin, int destination)
     {
-        for (int i = 0; i < list[origin].size(); i++)
+        for (int i = 0; i < adjList[origin].size(); i++)
         {
-            if (list[origin][i] == destination)
+            if (adjList[origin][i] == destination)
             {
-                list[origin].erase(list[origin].begin() + i);
+                adjList[origin].erase(adjList[origin].begin() + i);
                 break;
             }
         }
-        for (int i = 0; i < list[origin].size(); i++)
+        for (int i = 0; i < adjList[destination].size(); i++)
         {
-            if (list[destination][i] == origin)
+            if (adjList[destination][i] == origin)
             {
-                list[origin].erase(list[destination].begin() + i);
+                adjList[destination].erase(adjList[destination].begin() + i);
                 break;
             }
         }
@@ -52,14 +54,12 @@ public:
 };
 int main()
 {
-    AdjacencyList list(5);
-    // list.display();
-    list.add_edge(0, 1);
-    list.add_edge(20, 4);
-    list.delete_adge(1, 1);
-    list.add_edge(2, 1);
-    list.add_edge(1, 1);
-    list.add_edge(4, 0);
-    list.display();
-    return 0;
+    int vertices = 5;
+    AdjacencyList adjList(vertices);
+    adjList.add_edge(0, 1);
+    adjList.add_edge(0, 2);
+    adjList.add_edge(1, 3);
+    adjList.add_edge(1, 2);
+    adjList.del_edge(0, 1);
+    adjList.display();
 }
