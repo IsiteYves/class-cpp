@@ -1,65 +1,67 @@
 #include <iostream>
-#include <vector>
 using namespace std;
-class AdjacencyList
+
+class Graph
 {
 private:
     int nodes;
-    vector<int> *list;
+    int **adjMatrix;
 
 public:
-    AdjacencyList(int nodes)
+    Graph(int node)
     {
-        this->nodes = nodes;
-        this->list = new vector<int>[nodes];
+        this->nodes = node;
+        this->adjMatrix = new int *[node];
+        int i, j;
+        for (i = 0; i < node; i++)
+        {
+            adjMatrix[i] = new int[node];
+            for (j = 0; j < node; j++)
+                adjMatrix[i][j] = 0;
+        }
+    }
+    void add_edge(int origin, int dest)
+    {
+        if (origin < 0 || dest < 0 || origin >= nodes || dest >= nodes)
+        {
+            cout << "Invalid operation";
+            return;
+        }
+        this->adjMatrix[origin][dest] = 1;
+        this->adjMatrix[dest][origin] = 1;
+    }
+    void remove_edge(int origin, int dest)
+    {
+        if (origin < 0 || dest < 0 || origin >= nodes || dest >= nodes)
+        {
+            cout << "Invalid operation";
+            return;
+        }
+        this->adjMatrix[origin][dest] = 0;
+        this->adjMatrix[dest][origin] = 0;
     }
     void display()
     {
-        for (int i = 0; i < nodes; i++)
+        int i, j;
+        for (i = 0; i < nodes; i++)
         {
-            cout << "Node: " << i;
-            for (auto v : list[i])
-            {
-                cout << "->" << v;
-            }
-            cout << endl;
-        }
-    }
-    void add_edge(int origin, int destination)
-    {
-        list[origin].push_back(destination);
-        list[destination].push_back(origin);
-    }
-    void delete_adge(int origin, int destination)
-    {
-        for (int i = 0; i < list[origin].size(); i++)
-        {
-            if (list[origin][i] == destination)
-            {
-                list[origin].erase(list[origin].begin() + i);
-                break;
-            }
-        }
-        for (int i = 0; i < list[origin].size(); i++)
-        {
-            if (list[destination][i] == origin)
-            {
-                list[origin].erase(list[destination].begin() + i);
-                break;
-            }
+            for (j = 0; j < nodes; j++)
+                cout << adjMatrix[i][j] << " ";
+            cout << "\n";
         }
     }
 };
+
 int main()
 {
-    AdjacencyList list(5);
-    // list.display();
-    list.add_edge(0, 1);
-    list.add_edge(20, 4);
-    list.delete_adge(1, 1);
-    list.add_edge(2, 1);
-    list.add_edge(1, 1);
-    list.add_edge(4, 0);
-    list.display();
-    return 0;
+    Graph g(7);
+    g.add_edge(1, 4);
+    g.add_edge(0, 1);
+    g.add_edge(6, 3);
+    g.add_edge(9, 2);
+    g.remove_edge(0, 1);
+    g.remove_edge(3, 10);
+    g.add_edge(6, 0);
+    cout << "\n";
+    g.display();
 }

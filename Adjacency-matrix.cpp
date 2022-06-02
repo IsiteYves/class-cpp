@@ -36,6 +36,7 @@ public:
             return;
         }
         matrix[origin][destination] = 1;
+        matrix[destination][origin] = 1;
     }
     void remove_edge(int origin, int destination)
     {
@@ -45,6 +46,7 @@ public:
             return;
         }
         matrix[origin][destination] = 0;
+        matrix[destination][origin] = 0;
     }
 };
 
