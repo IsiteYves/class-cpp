@@ -20,10 +20,8 @@ public:
         for (int i = 0; i < nodes; i++)
         {
             cout << "Node " << i << ": ";
-            for (auto dest : adjList[i])
-            {
-                cout << " -> " << dest;
-            }
+            for (auto adjNode : adjList[i])
+                cout << " -> " << adjNode;
             cout << endl;
         }
     }
