@@ -1,61 +1,67 @@
-// C++ program to print DFS traversal from
-// a given vertex in a given graph
-#include <bits/stdc++.h>
+#include <iostream>
+#include <list>
+
 using namespace std;
 
-// Graph class represents a directed graph
-// using adjacency list representation
 class Graph
 {
+    int numVertices;
+    list<int> *adjList;
+    bool *visited;
+
 public:
-    map<int, bool> visited;
-    map<int, list<int> > adj;
-
-    // function to add an edge to graph
-    void addEdge(int v, int w);
-
-    // DFS traversal of the vertices
-    // reachable from v
-    void DFS(int v);
+    Graph(int vertices);
+    void add_edge(int src, int dst);
+    void DFS(int vertex);
 };
 
-void Graph::addEdge(int v, int w)
+Graph::Graph(int vertices)
 {
-    adj[v].push_back(w); // Add w to v’s list.
+    numVertices = vertices;
+    adjList = new list<int>[numVertices];
+    visited = new bool[numVertices];
+    for (int i = 0; i < numVertices; i++)
+    {
+        visited[i] = false;
+    }
 }
 
-void Graph::DFS(int v)
+void Graph::add_edge(int src, int dst)
 {
-    // Mark the current node as visited and
-    // print it
-    visited[v] = true;
-    cout << v << " ";
+    adjList[src].push_back(dst);
+    adjList[dst].push_back(src);
+}
 
-    // Recur for all the vertices adjacent
-    // to this vertex
+void Graph::DFS(int vertex)
+{
+
+    visited[vertex] = true;
+    cout << "Visited " << vertex << " ";
+
     list<int>::iterator i;
-    for (i = adj[v].begin(); i != adj[v].end(); ++i)
+
+    for (i = adjList[vertex].begin(); i != adjList[vertex].end(); ++i)
+    {
         if (!visited[*i])
+        {
             DFS(*i);
+        }
+    }
 }
 
-// Driver code
 int main()
 {
-    // Create a graph given in the above diagram
-    Graph g;
-    g.addEdge(0, 1);
-    g.addEdge(0, 2);
-    g.addEdge(1, 2);
-    g.addEdge(2, 0);
-    g.addEdge(2, 3);
-    g.addEdge(3, 3);
+    Graph g(6);
+    g.add_edge(0, 4);
+    g.add_edge(0, 1);
+    g.add_edge(1, 4);
+    g.add_edge(1, 2);
 
-    cout << "Following is Depth First Traversal"
-            " (starting from vertex 2) \n";
-    g.DFS(2);
+    g.add_edge(2, 3);
+    g.add_edge(3, 4);
+    g.add_edge(3, 5);
+
+    g.DFS(4);
 
     return 0;
 }
-
-// improved by Vishnudev C
