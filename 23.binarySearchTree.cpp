@@ -104,11 +104,11 @@ int main()
     bt.add_node(root, 7);
     bt.add_node(root, 9);
     bt.add_node(root, 2);
-    cout << "Inorder traversal\n";
+    cout << "\n\nInorder traversal: ";
     bt.inorderTraversal(root);
-    cout << "\n preorder traversal\n";
+    cout << "\n\nPreorder traversal: ";
     bt.preOrderTraversal(root);
-    cout << "\n postorder traversal\n";
+    cout << "\n\nPostorder traversal: ";
     bt.postOrderTraversal(root);
     bt.print2D(root);
     return 0;
