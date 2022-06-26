@@ -24,7 +24,7 @@ int fun(int i, int mask)
 	// base case
 	// if only ith bit and 1st bit is set in our mask,
 	// it implies we have visited all other nodes already
-	if (mask == ((1 << i) | 3))
+	if (mask == ((1 << i) | 3))`
 		return dist[1][i];
 	// memoization
 	if (memo[i][mask] != 0)
